@@ -1,0 +1,16 @@
+
+@media screen and (max-width: 576px){
+    
+    .nav-fullscreem {
+        display: none;
+    }
+
+    .nav-mobile {
+        display: block !important;
+    }
+
+    .toggle-navbar {
+        display: flex !important;
+    }
+
+}
