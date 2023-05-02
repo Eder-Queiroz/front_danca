@@ -40,7 +40,7 @@ const createUserFormSchemas = z.object({
   data_nascimento: z.string().nonempty("A data de nascimento é obrigatória!"),
   professora: z.string().nonempty("A professora é obrigatório!"),
   data_matricula: z.string().nonempty("A data de matricula é obrigatória!"),
-  responsavel: z.string().nonempty("O nome do responsável é obrigatório!"),
+  responsavel: z.string(),
 });
 
 type createUserFormData = z.infer<typeof createUserFormSchemas>;
@@ -62,6 +62,7 @@ export default function Cadastro() {
     uf: "",
   });
 
+  const [visible, setVisible] = useState("");
   const [modal, setModal] = useState(false);
 
   const toggle = () => setModal(!modal);
@@ -80,6 +81,14 @@ export default function Cadastro() {
       .then((data) => {
         setCepInfo(data);
       });
+  };
+
+  const getBirthData = (props: any) => {
+    const bornDate: any = new Date(props.target.value);
+    const currentDate: any = new Date();
+    const year = (currentDate - bornDate) / 31540000000;
+
+    if (year) return year >= 18 ? setVisible("d-none") : setVisible("");
   };
 
   return (
@@ -317,6 +326,7 @@ export default function Cadastro() {
                   type="date"
                   id="dataNascimento"
                   {...register("data_nascimento")}
+                  onBlur={getBirthData}
                 />
                 {errors.data_nascimento && (
                   <span className="text-danger">
@@ -357,7 +367,7 @@ export default function Cadastro() {
               </span>
             )}
           </FormGroup>
-          <FormGroup>
+          <FormGroup className={visible}>
             <Label htmlFor="nomeResponsavel">Nome do responsavel</Label>
             <input
               className="form-control"
