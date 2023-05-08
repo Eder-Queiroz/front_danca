@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Table, InputGroup, InputGroupText, Input } from "reactstrap";
+import { Table, InputGroup, InputGroupText, Input, Spinner } from "reactstrap";
 import { Link } from "react-router-dom";
 import { getClients } from "../../../api/api";
 
@@ -36,7 +36,7 @@ export default function Client() {
         style={{ width: "100%", height: "76vh" }}
         className="d-flex justify-content-center align-items-center"
       >
-        <h3>Carregando...</h3>
+        <Spinner>Carregando...</Spinner>
       </div>
     );
   }
@@ -71,7 +71,7 @@ export default function Client() {
                   <td className="clientName">{client["nome"]}</td>
                   <td>
                     <div className="d-flex justify-content-center gap-2">
-                      <Link to={"#"}>
+                      <Link to={`/clientes/${client["id"]}`}>
                         <i className="bi bi-info-circle-fill"></i>
                       </Link>
                       <Link to={"#"}>
